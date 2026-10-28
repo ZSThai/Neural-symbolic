@@ -1,0 +1,22 @@
+|--- margin=SPICULATED <= 0.50
+|   |--- margin=ILL_DEFINED <= 0.50
+|   |   |--- margin=MICROLOBULATED <= 0.50
+|   |   |   |--- weights: [497.00, 67.00] class: 0
+|   |   |--- margin=MICROLOBULATED >  0.50
+|   |   |   |--- weights: [40.00, 69.00] class: 1
+|   |--- margin=ILL_DEFINED >  0.50
+|   |   |--- shape=OVAL <= 0.50
+|   |   |   |--- weights: [92.00, 183.00] class: 1
+|   |   |--- shape=OVAL >  0.50
+|   |   |   |--- weights: [29.00, 23.00] class: 0
+|--- margin=SPICULATED >  0.50
+|   |--- shape=ARCHITECTURAL_DISTORTION <= 0.50
+|   |   |--- shape=IRREGULAR <= 0.50
+|   |   |   |--- weights: [0.00, 47.00] class: 1
+|   |   |--- shape=IRREGULAR >  0.50
+|   |   |   |--- weights: [12.00, 171.00] class: 1
+|   |--- shape=ARCHITECTURAL_DISTORTION >  0.50
+|   |   |--- shape=IRREGULAR <= 0.50
+|   |   |   |--- weights: [9.00, 34.00] class: 1
+|   |   |--- shape=IRREGULAR >  0.50
+|   |   |   |--- weights: [2.00, 43.00] class: 1

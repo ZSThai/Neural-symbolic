@@ -1,0 +1,23 @@
+{
+  "row": 7,
+  "shape": "IRREGULAR",
+  "margin": "ILL_DEFINED-SPICULATED",
+  "y": 1,
+  "p_malignant": 0.8378437519937443,
+  "rules": [
+    {
+      "shape": "IRREGULAR",
+      "margin": "ILL_DEFINED",
+      "alpha": 1.0,
+      "consequent": 0.7374730352719568,
+      "contribution": 0.3687365176359784
+    },
+    {
+      "shape": "IRREGULAR",
+      "margin": "SPICULATED",
+      "alpha": 1.0,
+      "consequent": 0.9382144687155318,
+      "contribution": 0.4691072343577659
+    }
+  ]
+}

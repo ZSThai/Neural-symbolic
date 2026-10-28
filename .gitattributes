@@ -1,0 +1,3 @@
+# Giữ nguyên từng byte của CSV chính thức (CRLF) để SHA-256 khớp khi notebook đọc từ GitHub
+data/official_csv/*.csv -text
+*.png binary

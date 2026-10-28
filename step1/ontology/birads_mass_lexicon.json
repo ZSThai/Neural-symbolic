@@ -1,0 +1,53 @@
+{
+  "_about": "Từ vựng khái niệm cho tổn thương dạng mass của CBIS-DDSM, ánh xạ sang BI-RADS Atlas 5th edition (ACR 2013). Đây là tri thức miền được mã hóa thủ công, cần GS và một bác sĩ chẩn đoán hình ảnh xác nhận. Thứ hạng nghi ngờ (suspicion_rank) là prior định tính, KHÔNG học từ dữ liệu; dùng cho baseline 'chỉ tri thức' và cho các ràng buộc đơn điệu ở các bước sau.",
+  "_principle_worst_feature": "Trong thực hành BI-RADS, đặc điểm nghi ngờ nhất quyết định mức đánh giá. Với ô chứa nhiều giá trị (ví dụ ILL_DEFINED-SPICULATED) ta lấy max thứ hạng cho baseline tri thức.",
+  "separator_in_cbis": "-",
+  "groups": {
+    "shape": {
+      "birads_property": "Mass.shape",
+      "values": {
+        "ROUND":   {"birads5": "Round",  "parent": "MassShape",   "suspicion_rank": 0, "note": "Hình cầu/tròn."},
+        "OVAL":    {"birads5": "Oval",   "parent": "MassShape",   "suspicion_rank": 0, "note": "Elip; BI-RADS 5 cho phép 2-3 gợn sóng nhẹ."},
+        "LOBULATED": {"birads5": "Oval", "parent": "MassShape",   "suspicion_rank": 1, "note": "Thuật ngữ BI-RADS 4th ed; ở 5th ed được gộp vào Oval (gently lobulated). Giữ riêng vì CBIS-DDSM gán riêng; thứ hạng trung gian là giả định."},
+        "IRREGULAR": {"birads5": "Irregular", "parent": "MassShape", "suspicion_rank": 2, "note": "Không tròn, không oval."},
+        "ARCHITECTURAL_DISTORTION": {"birads5": "ArchitecturalDistortion", "parent": "OtherFinding", "suspicion_rank": 2, "note": "Không phải hình dạng mass theo BI-RADS 5; là một finding riêng, thường nghi ngờ khi không có tiền sử phẫu thuật/chấn thương."},
+        "FOCAL_ASYMMETRIC_DENSITY": {"birads5": "FocalAsymmetry", "parent": "OtherFinding", "suspicion_rank": 1, "note": "Asymmetry, không phải mass shape."},
+        "ASYMMETRIC_BREAST_TISSUE": {"birads5": "GlobalAsymmetry", "parent": "OtherFinding", "suspicion_rank": 0, "note": "Asymmetry diện rộng; thường lành."},
+        "LYMPH_NODE": {"birads5": "IntramammaryLymphNode", "parent": "OtherFinding", "suspicion_rank": 0, "note": "Hạch trong vú; thường lành."}
+      }
+    },
+    "margin": {
+      "birads_property": "Mass.margin",
+      "values": {
+        "CIRCUMSCRIBED":  {"birads5": "Circumscribed",  "parent": "BenignAppearingMargin", "suspicion_rank": 0, "note": "Bờ rõ, chuyển tiếp sắc nét."},
+        "OBSCURED":       {"birads5": "Obscured",       "parent": "IndeterminateMargin",   "suspicion_rank": 1, "note": "Bờ bị mô chồng lấp che; không đánh giá được."},
+        "MICROLOBULATED": {"birads5": "Microlobulated", "parent": "SuspiciousMargin",      "suspicion_rank": 2, "note": "Gợn sóng nhỏ, chu kỳ ngắn."},
+        "ILL_DEFINED":    {"birads5": "Indistinct",     "parent": "SuspiciousMargin",      "suspicion_rank": 2, "note": "BI-RADS 5 dùng 'indistinct' thay cho 'ill-defined'."},
+        "SPICULATED":     {"birads5": "Spiculated",     "parent": "SuspiciousMargin",      "suspicion_rank": 3, "note": "Các đường tỏa ra từ khối."}
+      }
+    }
+  },
+  "hierarchy": {
+    "Finding": ["Mass", "OtherFinding"],
+    "MassShape": ["Round", "Oval", "Irregular"],
+    "OtherFinding": ["ArchitecturalDistortion", "FocalAsymmetry", "GlobalAsymmetry", "IntramammaryLymphNode"],
+    "MassMargin": ["BenignAppearingMargin", "IndeterminateMargin", "SuspiciousMargin"],
+    "SuspiciousMargin": ["Microlobulated", "Indistinct", "Spiculated"]
+  },
+  "candidate_axioms_to_validate": [
+    "Round ⊓ Circumscribed ⊑ LowSuspicion",
+    "Oval ⊓ Circumscribed ⊑ LowSuspicion",
+    "Spiculated ⊑ HighSuspicion",
+    "Irregular ⊓ SuspiciousMargin ⊑ HighSuspicion",
+    "Disjoint(Round, Oval, Irregular) cho một mass đơn lẻ trong BI-RADS 5, nhưng CBIS-DDSM có ô đa trị, nên ở mức chú giải cần mô hình mờ/đa trị"
+  ],
+  "excluded_from_Z": {
+    "assessment": "Kết luận tổng thể BI-RADS của bác sĩ, có thể được cập nhật sau khi có thêm thông tin; gần như là một bộ phân loại Y do con người làm. Chỉ dùng làm tham chiếu rò rỉ.",
+    "pathology": "Nhãn Y.",
+    "subtlety": "Độ khó nhìn thấy do người đọc đánh giá; mô tả người đọc hơn là tổn thương. Chỉ dùng phân tích phân nhóm/độ nhạy.",
+    "patient_id, file paths, abnormality id": "Định danh."
+  },
+  "context_attributes": {
+    "breast_density": "BI-RADS density 1-4 (fatty → extremely dense). Thuộc tính của vú, không của tổn thương; nhìn được từ ảnh toàn vú, khó từ crop ROI."
+  }
+}

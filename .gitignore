@@ -1,0 +1,15 @@
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Đầu ra sinh ra khi chạy notebook (không commit)
+step1_results/
+step1_results.zip
+official_csv_verified/
+
+# Office / hệ điều hành
+~$*
+.DS_Store
+Thumbs.db
+desktop.ini

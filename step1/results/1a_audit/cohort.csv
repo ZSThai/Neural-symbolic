@@ -1,0 +1,3 @@
+split,rows_lesion_view,patients,images,putative_lesions,lesions_with_CC_and_MLO,lesions_single_view,malignant_rows,benign_rows,benign_without_callback_rows,malignant_rate
+train,1318,691,1231,782,536,246,637,577,104,0.4833
+test,378,201,361,223,155,68,147,194,37,0.3889

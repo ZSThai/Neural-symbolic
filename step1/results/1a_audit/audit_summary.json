@@ -1,0 +1,18 @@
+{
+  "input_sha256": {
+    "calc_case_description_test_set.csv": "03a2f72efb6ed29f417e07f4598950e6a1e02e6b11250ff516ebe7924ace3689",
+    "calc_case_description_train_set.csv": "3c7b07e8202f66709f446b9695e96c5d17484a65fda6a24d0170a0c1b81d56e3",
+    "mass_case_description_test_set.csv": "60f0b4504ec024106bbdd1555030d220163ea9da0ea4688473a4c9c3e8ab0457",
+    "mass_case_description_train_set.csv": "a4bcc1c32bfd040212737e6e8c304819334abe717cfefff56431dc50ae6db723"
+  },
+  "patient_overlap_train_test": 0,
+  "calc_rows_not_used": {
+    "train": 1546,
+    "test": 326
+  },
+  "multi_valued_shape_rows_train": 69,
+  "multi_valued_margin_rows_train": 106,
+  "missing_shape_rows_train": 4,
+  "missing_margin_rows_train": 43,
+  "rows_otherfinding_only_train": 145
+}

@@ -1,0 +1,13 @@
+{
+  "H(Y)_nats": 0.6925898341161054,
+  "I(Y;shape)_nats": 0.14543248931125458,
+  "I/H(Y) shape": 0.20998357490600178,
+  "I(Y;margin)_nats": 0.26324994128079393,
+  "I/H(Y) margin": 0.3800950119586405,
+  "I(Y;shape×margin)_nats": 0.30228327935742905,
+  "I/H(Y) shape×margin": 0.43645353204354775,
+  "I(Y;assessment)_nats": 0.255993340389175,
+  "I/H(Y) assessment": 0.36961752509099116,
+  "optimistic_in_sample_cell_majority_accuracy": 0.8254931714719271,
+  "n_distinct_cells": 65
+}

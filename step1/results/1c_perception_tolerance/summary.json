@@ -1,0 +1,20 @@
+{
+  "auroc_clean_mean": 0.8702534441993224,
+  "B_reference_used": 0.82,
+  "concept_acc_needed_for_B_fuzzy_soft": 0.8129950944180018,
+  "concept_acc_needed_for_B_crisp": 0.842940411158703,
+  "cross_view": {
+    "seed": 2.0,
+    "rows_with_partner": 1072.0,
+    "rows_concept_changed": 294.0,
+    "shape_change_rate": 0.17723880597014927,
+    "margin_change_rate": 0.16417910447761194,
+    "auroc_own_annotation": 0.8790982464936837,
+    "auroc_other_view_annotation": 0.87522145155225,
+    "auroc_random_relabel_same_rate": 0.7955824593657294
+  },
+  "human_cross_view_agreement_shape_margin": [
+    0.8228,
+    0.8358
+  ]
+}

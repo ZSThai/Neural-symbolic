@@ -1,0 +1,1 @@
+CBIS-DDSM metadata, TCIA, CC BY 3.0. Sawyer-Lee et al. (2016), doi:10.7937/K9/TCIA.2016.7O02S9CY. Lee et al. Scientific Data (2017), doi:10.1038/sdata.2017.177. Source URLs and byte hashes: protocol.json.

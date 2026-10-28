@@ -1,0 +1,18 @@
+group,cbis_value,birads5,parent,suspicion_rank_prior,n_rows,malignant_rate
+shape,ARCHITECTURAL_DISTORTION,ArchitecturalDistortion,OtherFinding,2.0,128,0.7656
+shape,ASYMMETRIC_BREAST_TISSUE,GlobalAsymmetry,OtherFinding,0.0,20,0.4
+shape,FOCAL_ASYMMETRIC_DENSITY,FocalAsymmetry,OtherFinding,1.0,21,0.2381
+shape,IRREGULAR,Irregular,MassShape,2.0,404,0.8267
+shape,LOBULATED,Oval,MassShape,1.0,317,0.3438
+shape,LYMPH_NODE,IntramammaryLymphNode,OtherFinding,0.0,35,0.0
+shape,OVAL,Oval,MassShape,0.0,331,0.2749
+shape,ROUND,Round,MassShape,0.0,128,0.3125
+shape,(đa trị),,,,69,
+shape,(thiếu),,,,4,0.5
+margin,CIRCUMSCRIBED,Circumscribed,BenignAppearingMargin,0.0,352,0.1307
+margin,ILL_DEFINED,Indistinct,SuspiciousMargin,2.0,358,0.6564
+margin,MICROLOBULATED,Microlobulated,SuspiciousMargin,2.0,116,0.6379
+margin,OBSCURED,Obscured,IndeterminateMargin,1.0,243,0.2099
+margin,SPICULATED,Spiculated,SuspiciousMargin,3.0,318,0.9277
+margin,(đa trị),,,,106,
+margin,(thiếu),,,,43,0.2093
