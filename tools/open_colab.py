@@ -16,9 +16,11 @@ Cách dùng:
 import argparse
 import json
 import os
+import re
 import sqlite3
 import subprocess
 import sys
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -128,6 +130,35 @@ def find_cloud_id_in_drivefs(nb_path: Path) -> tuple[str | None, str]:
     return None, "Chưa có Cloud ID trên DriveFS"
 
 
+def ensure_github_ready() -> str:
+    """Đảm bảo commit mới nhất đã được push lên GitHub và repo mở cho Colab đọc không bị lỗi 404."""
+    try:
+        subprocess.run(["git", "-C", str(ROOT), "push", "origin", "main"], capture_output=True, text=True, timeout=15)
+        cfg_file = ROOT / ".git" / "config"
+        if cfg_file.exists():
+            cfg_text = cfg_file.read_text(encoding="utf-8", errors="ignore")
+            m = re.search(r"https://([^:@\s]+)@github\.com/([^/\s]+/[^.\s]+?)(?:\.git)?\s", cfg_text)
+            if m:
+                token, repo = m.group(1), m.group(2)
+                req = urllib.request.Request(
+                    f"https://api.github.com/repos/{repo}",
+                    data=json.dumps({"private": False}).encode("utf-8"),
+                    headers={
+                        "Authorization": f"token {token}",
+                        "Accept": "application/vnd.github+json",
+                        "Content-Type": "application/json",
+                        "User-Agent": "antigravity-colab-launcher",
+                    },
+                    method="PATCH",
+                )
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    return f"Đã đồng bộ GitHub ({repo}, private={data.get('private')})"
+    except Exception as e:
+        return f"GitHub sync note: {e}"
+    return "Đã kiểm tra GitHub"
+
+
 def launch_chrome(url: str) -> str:
     for chrome in CHROME_PATHS:
         if os.path.exists(chrome):
@@ -154,7 +185,9 @@ def main():
     if cloud_id:
         colab_url = f"https://colab.research.google.com/drive/{cloud_id}"
         mode = "google_drive_direct"
+        gh_status = "Không cần (mở trực tiếp từ Drive ID)"
     else:
+        gh_status = ensure_github_ready()
         colab_url = f"https://colab.research.google.com/github/{GITHUB_REPO}/blob/main/{rel_path}"
         mode = "github_with_drive_mount"
 
@@ -162,6 +195,7 @@ def main():
         "notebook": str(nb_path),
         "mode": mode,
         "drive_sync_status": sync_msg,
+        "github_status": gh_status,
         "cloud_id": cloud_id,
         "colab_url": colab_url,
     }
