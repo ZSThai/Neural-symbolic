@@ -167,7 +167,7 @@ def try_local() -> dict:
 def try_github() -> dict:
     """Đọc CSV từ repo GitHub. Repo private: thêm secret GITHUB_TOKEN trong Colab (biểu tượng 🔑 bên trái)."""
     repo = CFG["GITHUB_REPO"]
-    if not repo or repo == "OWNER/REPO":
+    if not repo or "OWNER" in repo:
         return {}
     token = os.environ.get("GITHUB_TOKEN")
     if IN_COLAB and not token:
