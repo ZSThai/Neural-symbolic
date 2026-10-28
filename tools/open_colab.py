@@ -23,6 +23,11 @@ import sys
 import urllib.request
 from pathlib import Path
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_NB = ROOT / "step1" / "Step1_CBIS_DDSM_Colab.ipynb"
 GITHUB_REPO = "ZSThai/Neural-symbolic"
