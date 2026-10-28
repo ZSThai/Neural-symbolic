@@ -99,11 +99,11 @@ CFG = dict(
     # Nguồn dữ liệu: "auto" thử lần lượt: thư mục cục bộ → Google Drive gốc → repo GitHub → TCIA → tải file lên tay
     DATA_SOURCE="auto",
     LOCAL_DIRS=["official_csv", "data/official_csv", "../data/official_csv", "claude_research/data/official_csv"],
-    GITHUB_REPO="OWNER/REPO",  # ← sửa thành "tên-tài-khoản/tên-repo" sau khi đẩy lên GitHub
+    GITHUB_REPO="ZSThai/Neural-symbolic",
     GITHUB_BRANCH="main",
     DRIVE_DIR="/content/drive/Othercomputers/NGOCTHAI/New Paper with Umberto/claude_research/data/official_csv",
     SAVE_TO_DRIVE=True,       # True: lưu kết quả trực tiếp vào thư mục gốc đã đồng bộ
-    SAVE_DIR="/content/drive/Othercomputers/NGOCTHAI/New Paper with Umberto/claude_research/step1/results",
+    SAVE_DIR="/content/drive/Othercomputers/NGOCTHAI/New Paper with Umberto/claude_research/step1/step1_results",
     N_SPLITS=5,               # số fold CV (chia theo bệnh nhân)
     N_REPEATS=2 if FAST else 5,   # số lần lặp CV với seed khác nhau
     N_BOOT=500 if FAST else 2000, # số lần bootstrap theo bệnh nhân cho CI 95%
@@ -934,10 +934,12 @@ display(Markdown(f"""
 code(r'''
 # @title 6.2 Lưu bảng, hình và tải về { display-mode: "form" }
 if IN_COLAB and CFG["SAVE_TO_DRIVE"]:
+    import glob
     from google.colab import drive
-    if not Path("/content/drive/MyDrive").exists():
+    if not Path("/content/drive").exists():
         drive.mount("/content/drive")
-    save = Path(CFG["SAVE_DIR"])
+    synced_step1 = glob.glob("/content/drive/Othercomputers/*/New Paper with Umberto/claude_research/step1")
+    save = (Path(synced_step1[0]) / "step1_results") if synced_step1 else Path(CFG["SAVE_DIR"])
 else:
     save = Path("/content/step1_results" if IN_COLAB else "step1_results")
 save.mkdir(parents=True, exist_ok=True)
