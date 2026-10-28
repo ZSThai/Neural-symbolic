@@ -79,17 +79,31 @@ from sklearn.tree import DecisionTreeClassifier, export_text
 
 IN_COLAB = "google.colab" in sys.modules
 
+# Tự động kết nối Google Drive nếu đang trên Colab và chuyển vào thư mục gốc đồng bộ
+if IN_COLAB and not Path("../data/official_csv").exists():
+    try:
+        from google.colab import drive
+        import glob
+        if not os.path.exists("/content/drive"):
+            drive.mount("/content/drive")
+        synced_dirs = glob.glob("/content/drive/Othercomputers/*/New Paper with Umberto/claude_research/step1")
+        if synced_dirs:
+            os.chdir(synced_dirs[0])
+            print(f"Đã chuyển thư mục làm việc sang thư mục gốc đồng bộ: {os.getcwd()}")
+    except Exception as e:
+        print(f"Drive auto-detect: {e}")
+
 FAST = False  # True: chạy thử nhanh (ít lặp lại hơn)
 
 CFG = dict(
-    # Nguồn dữ liệu: "auto" thử lần lượt: thư mục cục bộ → repo GitHub → TCIA → Google Drive → tải file lên tay
+    # Nguồn dữ liệu: "auto" thử lần lượt: thư mục cục bộ → Google Drive gốc → repo GitHub → TCIA → tải file lên tay
     DATA_SOURCE="auto",
     LOCAL_DIRS=["official_csv", "data/official_csv", "../data/official_csv", "claude_research/data/official_csv"],
     GITHUB_REPO="OWNER/REPO",  # ← sửa thành "tên-tài-khoản/tên-repo" sau khi đẩy lên GitHub
     GITHUB_BRANCH="main",
-    DRIVE_DIR="/content/drive/MyDrive/claude_research/data/official_csv",  # nếu bạn để CSV trên Drive
-    SAVE_TO_DRIVE=False,      # True: lưu kết quả vào Drive (cần cấp quyền); False: lưu /content + tải zip
-    SAVE_DIR="/content/drive/MyDrive/claude_research/step1_results",
+    DRIVE_DIR="/content/drive/Othercomputers/NGOCTHAI/New Paper with Umberto/claude_research/data/official_csv",
+    SAVE_TO_DRIVE=True,       # True: lưu kết quả trực tiếp vào thư mục gốc đã đồng bộ
+    SAVE_DIR="/content/drive/Othercomputers/NGOCTHAI/New Paper with Umberto/claude_research/step1/results",
     N_SPLITS=5,               # số fold CV (chia theo bệnh nhân)
     N_REPEATS=2 if FAST else 5,   # số lần lặp CV với seed khác nhau
     N_BOOT=500 if FAST else 2000, # số lần bootstrap theo bệnh nhân cho CI 95%
@@ -196,8 +210,22 @@ def try_drive() -> dict:
     if not IN_COLAB:
         return {}
     from google.colab import drive
-    drive.mount("/content/drive")
-    return try_folder(CFG["DRIVE_DIR"])
+    import glob
+    if not os.path.exists("/content/drive"):
+        drive.mount("/content/drive")
+    found = try_folder(CFG.get("DRIVE_DIR", ""))
+    if len(found) == len(FILES):
+        return found
+    for pat in [
+        "/content/drive/Othercomputers/*/New Paper with Umberto/claude_research/data/official_csv",
+        "/content/drive/Othercomputers/*/*/claude_research/data/official_csv",
+        "/content/drive/MyDrive/New Paper with Umberto/claude_research/data/official_csv",
+    ]:
+        for p in glob.glob(pat):
+            found.update({k: v for k, v in try_folder(p).items() if k not in found})
+            if len(found) == len(FILES):
+                return found
+    return found
 
 
 def try_upload() -> dict:
@@ -208,8 +236,8 @@ def try_upload() -> dict:
     return {k: v for k, v in files.upload().items() if k in FILES}
 
 
-steps = {"local": try_local, "github": try_github, "download": try_download, "drive": try_drive, "upload": try_upload}
-order = ["local", "github", "download", "drive", "upload"] if CFG["DATA_SOURCE"] == "auto" else [CFG["DATA_SOURCE"]]
+steps = {"local": try_local, "drive": try_drive, "github": try_github, "download": try_download, "upload": try_upload}
+order = ["local", "drive", "github", "download", "upload"] if CFG["DATA_SOURCE"] == "auto" else [CFG["DATA_SOURCE"]]
 data = {}
 for step in order:
     data.update({k: v for k, v in steps[step]().items() if k not in data})
